@@ -101,3 +101,46 @@ void displayIndex() {
         }
     }
 }
+
+// Menu-driven interface
+void menu() {
+    int choice;
+    char fileName[MAX_FILENAME_LENGTH];
+    char word[MAX_WORD_LENGTH];
+
+    while (1) {
+        printf("\n--- Search Engine Simulator ---\n");
+        printf("1. Add File\n");
+        printf("2. Search Word\n");
+        printf("3. Display Index\n");
+        printf("4. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                printf("Enter file name: ");
+                scanf("%s", fileName);
+                parseFile(fileName);
+                break;
+
+            case 2:
+                printf("Enter word to search: ");
+                scanf("%s", word);
+                normalizeWord(word);
+                searchWord(word);
+                break;
+
+            case 3:
+                displayIndex();
+                break;
+
+            case 4:
+                printf("Exiting...\n");
+                return;
+
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    }
+}
