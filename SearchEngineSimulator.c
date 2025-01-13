@@ -47,3 +47,29 @@ void addWordToIndex(const char *word, const char *fileName) {
             return;
         }
     }
+       // Add a new word to the index
+    strcpy(index[indexSize].word, word);
+    strcpy(index[indexSize].files[0], fileName);
+    index[indexSize].occurrences[0] = 1;
+    index[indexSize].fileCount = 1;
+    indexSize++;
+}
+// Parse a file and add its words to the index
+void parseFile(const char *fileName) {
+    FILE *file = fopen(fileName, "r");
+    if (!file) {
+        printf("Error: Cannot open file %s\n", fileName);
+        return;
+    }
+
+    char word[MAX_WORD_LENGTH];
+    while (fscanf(file, "%49s", word) == 1) {
+        normalizeWord(word);
+        if (strlen(word) > 0) {
+            addWordToIndex(word, fileName);
+        }
+    }
+
+    fclose(file);
+    printf("File '%s' indexed successfully.\n", fileName);
+}
