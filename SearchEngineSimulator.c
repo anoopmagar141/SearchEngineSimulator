@@ -144,3 +144,8 @@ void menu() {
         }
     }
 }
+// Main function
+int main() {
+    menu();
+    return 0;
+}
