@@ -73,3 +73,16 @@ void parseFile(const char *fileName) {
     fclose(file);
     printf("File '%s' indexed successfully.\n", fileName);
 }
+// Search for a word in the index
+void searchWord(const char *word) {
+    for (int i = 0; i < indexSize; i++) {
+        if (strcmp(index[i].word, word) == 0) {
+            printf("Word '%s' found in:\n", word);
+            for (int j = 0; j < index[i].fileCount; j++) {
+                printf("  File: %s (Occurrences: %d)\n", index[i].files[j], index[i].occurrences[j]);
+            }
+            return;
+        }
+    }
+    printf("Word '%s' not found.\n", word);
+}
