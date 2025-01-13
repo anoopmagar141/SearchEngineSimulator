@@ -3,7 +3,19 @@
 #include <string.h>
 #include <ctype.h>
 
-// Constants
+#define MAX_WORDS 1000
+#define MAX_FILES 10
+#define MAX_WORD_LENGTH 50
+#define MAX_FILENAME_LENGTH 100
+
+typedef struct {
+    char word[MAX_WORD_LENGTH];
+    char files[MAX_FILES][MAX_FILENAME_LENGTH];
+    int occurrences[MAX_FILES];
+    int fileCount;
+} InvertedIndex;
+
+InvertedIndex index[MAX_WORDS];
 int indexSize = 0;
 
 // Normalize a word: convert to lowercase and remove punctuation
@@ -17,3 +29,21 @@ void normalizeWord(char *word) {
         }
     }
 }
+
+// Add a word to the index
+void addWordToIndex(const char *word, const char *fileName) {
+    for (int i = 0; i < indexSize; i++) {
+        if (strcmp(index[i].word, word) == 0) {
+            for (int j = 0; j < index[i].fileCount; j++) {
+                if (strcmp(index[i].files[j], fileName) == 0) {
+                    index[i].occurrences[j]++;
+                    return;
+                }
+            }
+            // Add new file entry for the word
+            strcpy(index[i].files[index[i].fileCount], fileName);
+            index[i].occurrences[index[i].fileCount] = 1;
+            index[i].fileCount++;
+            return;
+        }
+    }
