@@ -86,3 +86,18 @@ void searchWord(const char *word) {
     }
     printf("Word '%s' not found.\n", word);
 }
+// Display the complete index
+void displayIndex() {
+    if (indexSize == 0) {
+        printf("Index is empty.\n");
+        return;
+    }
+
+    printf("\n--- Index Content ---\n");
+    for (int i = 0; i < indexSize; i++) {
+        printf("Word: %s\n", index[i].word);
+        for (int j = 0; j < index[i].fileCount; j++) {
+            printf("  File: %s (Occurrences: %d)\n", index[i].files[j], index[i].occurrences[j]);
+        }
+    }
+}
